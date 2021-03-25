@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="c6fd9569-1303-4383-8273-880e2ee955f8" name="WEBTECH_2_z3" url="http://147.175.98.142">
+        <fileTransfer rootFolder="/home/xsokolk/public_html" accessType="SFTP" host="147.175.98.142" port="22" sshConfigId="7f3dc6d9-eaa4-4cea-80b4-95594d874866" sshConfig="xsokolk@147.175.98.142:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

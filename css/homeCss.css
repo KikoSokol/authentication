@@ -1,0 +1,21 @@
+body{
+    background-color: #322f2f;
+}
+
+p{
+    color: white;
+}
+
+span{
+    color: white;
+    font-weight: bold;
+}
+
+h4{
+    color: white;
+}
+
+.successText
+{
+    color: greenyellow;
+}
