@@ -1,3 +1,26 @@
+function canShowSite()
+{
+    const url = "../api.php?operation=canShowFa";
+    const request = new Request(url, {
+        method:'POST'
+    });
+
+    fetch(request)
+        .then(request => request.json())
+        .then(data =>
+        {
+            if(!data)
+            {
+                toLoginPage();
+            }
+        });
+
+
+}
+
+
+
+
 function verifyCodeAndLogin()
 {
     if(checkInput())
@@ -55,4 +78,9 @@ function getCode()
     let code = document.getElementById("code").value;
 
     return JSON.stringify({code:code});
+}
+
+function toLoginPage()
+{
+    window.location.replace("../index.html");
 }

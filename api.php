@@ -14,6 +14,7 @@ session_start();
 $service = new Service();
 $customService = new CustomLoginService();
 
+
 $operation = "";
 
 $operation = "";
@@ -30,10 +31,14 @@ switch($operation)
     case "getLoginUser":
         getLoginUser($service);
         break;
+    case "logout":
+        $result = session_destroy();
+        echo json_encode($result);
+        break;
     case "customRegistration":
         $json = file_get_contents('php://input');
         $registrationData = json_decode($json);
-        $registrationResponse = customRegistration($customService,$registrationData);
+        $registrationResponse = customRegistration($customService,$service,$registrationData);
         echo json_encode($registrationResponse);
         break;
     case "customLogin":
@@ -45,6 +50,12 @@ switch($operation)
         $json = file_get_contents('php://input');
         $code = json_decode($json);
         verifyCustomLogin($customService,$service,$code->code);
+        break;
+    case "userStats":
+        getStats($service);
+        break;
+    case "canShowFa":
+        echo(json_encode(isSetTmpAccount()));
         break;
     default:
 //        var_dump(json_encode($customService->getSecretCodeForRegistration()));
@@ -61,7 +72,9 @@ switch($operation)
 //        var_dump(json_encode($loginData));
 //        $_SESSION['accountId'] = 10;
 //        var_dump(verifyCustomLogin($customService,$service,"319548"));
-
+//        $_SESSION['accountId'] = 10;
+//        var_dump(getStats($service));
+//        var_dump($repository->getCoutnCustomAccount());
 
 
 
@@ -104,7 +117,17 @@ function getVerifyCustomLoginResponse($isLoginUser, $verifyCode)
     );
 }
 
-function customRegistration($customService,$registrationData)
+function getStatsResponse($isLoginUser, $user, $userAllAccess, $countOfLogin)
+{
+    return array(
+        "isLoginUser" => $isLoginUser,
+        "user" => $user,
+        "userAllAccess" => $userAllAccess,
+        "countOfLogin" => $countOfLogin
+    );
+}
+
+function customRegistration($customService,$service,$registrationData)
 {
     $verifyCode = $customService->verifyRegistrationCode($registrationData->secretId,$registrationData->code);
     if($verifyCode == false)
@@ -124,7 +147,7 @@ function customRegistration($customService,$registrationData)
 
     }
 
-    $_SESSION['accountId'] = $accountId;
+    doLoginUser($service,$accountId);//$_SESSION['accountId'] = $accountId;
     return getResponseRegistration(true,true,"Úspešne prihlasenie");
 
 }
@@ -154,7 +177,7 @@ function customLogin($customService,$service,$loginData)
     }
     else
     {
-        $_SESSION['accountId'] = $userAccount->id;
+        $_SESSION['accountIdTmp'] = $userAccount->id;
         $user = getResponseWithUser(true,$service->getUserByAccountId($userAccount->id));
         echo json_encode($user);
     }
@@ -164,24 +187,68 @@ function customLogin($customService,$service,$loginData)
 
 function verifyCustomLogin($customService, $service,$code)
 {
-    if(!isSetAccount())
+    if(!isSetTmpAccount())
     {
         $response = getVerifyCustomLoginResponse(false,false);
         echo json_encode($response);
     }
     else
     {
-        $account = $service->getUserAccountById($_SESSION['accountId']);
-        $response = getVerifyCustomLoginResponse(true,$customService->verifyLoginAccount($account,$code));
+        $account = $service->getUserAccountById($_SESSION['accountIdTmp']);
+        $verify = $customService->verifyLoginAccount($account,$code);
+        $response = getVerifyCustomLoginResponse(true,$verify);
+        if($verify)
+        {
+            doLoginUser($service,$_SESSION['accountIdTmp']);
+        }
+
         echo json_encode($response);
     }
 }
 
+function getStats($service)
+{
+    if(isSetAccount())
+    {
+        $user = $service->getUserByAccountId($_SESSION['accountId']);
+        $userAllAccess = $service->getAllAccessOfUser($_SESSION['accountId']);
+        $countOfLogin = $service->getCountOfLogin();
+        $response = getStatsResponse(true,$user,$userAllAccess,$countOfLogin);
+        echo json_encode($response);
+    }
+    else
+    {
+        $response = getStatsResponse(false,null,null,null);
+        echo json_encode($response);
+    }
+
+}
+
+
+function doLoginUser($service,$accountId)
+{
+    $_SESSION['accountId'] = $accountId;
+    addAccessForUser($service,$accountId);
+    if(isSetTmpAccount())
+        unset($_SESSION['accountIdTmp']);
+
+}
+
+function addAccessForUser($service,$accountId)
+{
+    $service->addAccessForAccount($accountId);
+}
 
 
 function isSetAccount()
 {
     return isset($_SESSION['accountId']);
+}
+
+
+function isSetTmpAccount()
+{
+    return isset($_SESSION['accountIdTmp']);
 }
 
 

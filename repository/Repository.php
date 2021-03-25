@@ -185,7 +185,6 @@ class Repository
     function addAccess($accountId)
     {
         try {
-            $type = self::LDAP;
             $sql = "INSERT INTO `ACCESS`(`account_id`) VALUES (:accountId)";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam("accountId",$accountId,PDO::PARAM_INT);
@@ -215,7 +214,7 @@ class Repository
         $sql = "SELECT count(*) as countOfCustomAccounts from ACCOUNT where ACCOUNT.type = 'CUSTOM';";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
-        return $stmt->fetch();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     function getCoutnGoogleAccount()
@@ -223,7 +222,7 @@ class Repository
         $sql = "SELECT count(*) as countOfGoogleAccounts from ACCOUNT where ACCOUNT.type = 'GOOGLE';";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
-        return $stmt->fetch();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     function getCoutnLdapAccount()
@@ -231,8 +230,16 @@ class Repository
         $sql = "SELECT count(*) as countOfLdapAccounts from ACCOUNT where ACCOUNT.type = 'LDAP';";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
-        return $stmt->fetch();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+//    function getAllAccessOfUserId($userId)
+//    {
+//        $sql = "SELECT ACCESS.ID as id, A.type as type, ACCESS.timestamp as timestamp FROM ACCESS INNER JOIN ACCOUNT A on ACCESS.account_id = A.ID INNER JOIN USER U on A.user_id = U.ID WHERE U.ID = :userId;";
+//        $stmt = $this->conn->prepare($sql);
+//        $stmt->bindParam("userId",$userId,PDO::PARAM_INT);
+//        return $stmt->fetchAll(PDO::FETCH_CLASS,"Access");
+//    }
 
 
 }
