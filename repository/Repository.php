@@ -172,6 +172,18 @@ class Repository
         return $stmt->fetch();
     }
 
+    function getUserLdapAccountByUserId($userId)
+    {
+        $type = self::LDAP;
+        $sql = "SELECT ACCOUNT.ID as id, ACCOUNT.user_id as userId, ACCOUNT.type as type, ACCOUNT.password as password, ACCOUNT.google_id as googleId, ACCOUNT.ldap_id as ldapId, ACCOUNT.secret_id AS secretId FROM ACCOUNT where ACCOUNT.user_id = :userId AND ACCOUNT.type = :type;";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam("userId",$userId,PDO::PARAM_INT);
+        $stmt->bindParam("type",$type,PDO::PARAM_STR);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS,"Account");
+        return $stmt->fetch();
+    }
+
     function getAccountById($accountId)
     {
         $sql = "SELECT ACCOUNT.ID as id, ACCOUNT.user_id as userId, ACCOUNT.type as type, ACCOUNT.password as password, ACCOUNT.google_id as googleId, ACCOUNT.ldap_id as ldapId, ACCOUNT.secret_id AS secretId FROM ACCOUNT where ACCOUNT.ID = :accountId;";
@@ -202,7 +214,7 @@ class Repository
 
     function getAllAccessOfUserByUserId($userId)
     {
-        $sql = "SELECT AC.ID as id ,A.type as type, AC.timestamp as timestamp FROM ACCESS AC JOIN ACCOUNT A on AC.account_id = A.ID INNER JOIN USER U on A.user_id = U.ID where U.ID = :userId;";
+        $sql = "SELECT AC.ID as id ,A.type as type, AC.timestamp as timestamp FROM ACCESS AC JOIN ACCOUNT A on AC.account_id = A.ID INNER JOIN USER U on A.user_id = U.ID where U.ID = :userId ORDER BY AC.timestamp DESC;";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam("userId",$userId,PDO::PARAM_INT);
         $stmt->execute();

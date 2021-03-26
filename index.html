@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group">
                     <label for="password" class="label">Heslo</label>
-                    <input type="text" class="form-control" id="password" placeholder="Heslo">
+                    <input type="password" class="form-control" id="password" placeholder="Heslo">
                 </div>
             </form>
             <a href="html/formular.html"><button class="btn btn-primary" id="customFormular">Vytvoriť účet</button></a>
@@ -45,10 +45,10 @@
                 </div>
                 <div class="form-group">
                     <label for="ldapPassword" class="label">Heslo</label>
-                    <input type="text" class="form-control" id="ldapPassword" placeholder="Heslo">
+                    <input type="password" class="form-control" id="ldapPassword" placeholder="Heslo">
                 </div>
             </form>
-            <button class="btn btn-success" id="ldapLoginButton">Prihlasiť sa</button>
+            <button class="btn btn-success" id="ldapLoginButton" onclick="ldapLogin()">Prihlasiť sa</button>
         </div>
     </article>
 

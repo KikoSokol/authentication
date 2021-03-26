@@ -1,6 +1,6 @@
 function customLogin()
 {
-    if(checkInput())
+    if(checkCustomInput())
     {
         const url = "api.php?operation=customLogin";//../api.php?operation=customLogin
         const request = new Request(url, {
@@ -56,7 +56,7 @@ function getCustomLoginData()
     return JSON.stringify({email:email,password:password});
 }
 
-function checkInput()
+function checkCustomInput()
 {
     let correct = checkFilledInputs("email","password");
 
@@ -66,5 +66,72 @@ function checkInput()
     }
 
     return correct;
+}
+
+
+
+
+
+
+
+function ldapLogin()
+{
+    if(checkLdapInput())
+    {
+        const url = "apiLdap.php?operation=loginLdap";//../api.php?operation=customLogin
+        const request = new Request(url, {
+            method:'POST',
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: getLdapLoginData(),
+        });
+
+        fetch(request)
+            .then(request => request.json())
+            .then(data =>
+            {
+                console.log(data);
+                doLdapLogin(data);
+
+            });
+    }
+}
+
+function doLdapLogin(data)
+{
+    if(data.isUserLogin)
+    {
+        window.location.replace("html/home.html");
+    }
+    else
+    {
+        window.alert(data.error);
+    }
+}
+
+
+
+
+
+function checkLdapInput()
+{
+    let correct = checkFilledInputs("ldapLogin","ldapPassword");
+
+    if(!correct)
+    {
+        window.alert("Neboli zadane kompletné prihlasovacie údaje");
+    }
+
+    return correct;
+}
+
+function getLdapLoginData()
+{
+    let login = document.getElementById("ldapLogin").value;
+    let password = document.getElementById("ldapPassword").value;
+
+    return JSON.stringify({login:login,password:password});
 }
 
