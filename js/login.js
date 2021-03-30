@@ -135,3 +135,26 @@ function getLdapLoginData()
     return JSON.stringify({login:login,password:password});
 }
 
+
+
+
+function googleLogin()
+{
+    const url = "apiGoogle.php";//../api.php?operation=customLogin
+    const request = new Request(url, {
+        method:'POST',
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: getLdapLoginData(),
+    });
+
+    fetch(request)
+        .then(request => request.json())
+        .then(data =>
+        {
+            window.location.href = data;
+        });
+}
+

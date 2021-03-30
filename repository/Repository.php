@@ -184,6 +184,18 @@ class Repository
         return $stmt->fetch();
     }
 
+    function getUserGoogleAccountByUserId($userId)
+    {
+        $type = self::GOOGLE;
+        $sql = "SELECT ACCOUNT.ID as id, ACCOUNT.user_id as userId, ACCOUNT.type as type, ACCOUNT.password as password, ACCOUNT.google_id as googleId, ACCOUNT.ldap_id as ldapId, ACCOUNT.secret_id AS secretId FROM ACCOUNT where ACCOUNT.user_id = :userId AND ACCOUNT.type = :type;";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam("userId",$userId,PDO::PARAM_INT);
+        $stmt->bindParam("type",$type,PDO::PARAM_STR);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS,"Account");
+        return $stmt->fetch();
+    }
+
     function getAccountById($accountId)
     {
         $sql = "SELECT ACCOUNT.ID as id, ACCOUNT.user_id as userId, ACCOUNT.type as type, ACCOUNT.password as password, ACCOUNT.google_id as googleId, ACCOUNT.ldap_id as ldapId, ACCOUNT.secret_id AS secretId FROM ACCOUNT where ACCOUNT.ID = :accountId;";
