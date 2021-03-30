@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/googleApi/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/googleApi/vendor/firebase/php-jwt" />
+      <excludeFolder url="file://$MODULE_DIR$/googleApi/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/googleApi/vendor/google/auth" />
+      <excludeFolder url="file://$MODULE_DIR$/googleApi/vendor/guzzlehttp/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/googleApi/vendor/google/apiclient-services" />
+      <excludeFolder url="file://$MODULE_DIR$/googleApi/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/googleApi/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/googleApi/vendor/paragonie/random_compat" />
+      <excludeFolder url="file://$MODULE_DIR$/googleApi/vendor/paragonie/constant_time_encoding" />
+      <excludeFolder url="file://$MODULE_DIR$/googleApi/vendor/psr/http-message" />
+      <excludeFolder url="file://$MODULE_DIR$/googleApi/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/googleApi/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/googleApi/vendor/monolog/monolog" />
+      <excludeFolder url="file://$MODULE_DIR$/googleApi/vendor/psr/http-client" />
+      <excludeFolder url="file://$MODULE_DIR$/googleApi/vendor/phpseclib/phpseclib" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
