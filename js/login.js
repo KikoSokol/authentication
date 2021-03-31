@@ -158,3 +158,30 @@ function googleLogin()
         });
 }
 
+
+function getLoginUser()
+{
+    const url = "api.php?operation=getLoginUser";
+    const request = new Request(url, {
+        method:'POST'
+    });
+
+    fetch(request)
+        .then(request => request.json())
+        .then(data =>
+        {
+            if(data.isUserLogin)
+                toHomePage();
+        });
+}
+
+function toLoginPage()
+{
+    window.location.replace("index.html");
+}
+
+function toHomePage()
+{
+    window.location.replace("html/home.html");
+}
+

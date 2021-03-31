@@ -8,7 +8,6 @@ require_once "model/User.php";
 
 header('Content-type: application/json');
 
-//session_id($_GET['PHPSESSID']);
 session_start();
 
 $service = new Service();
@@ -57,40 +56,8 @@ switch($operation)
     case "canShowFa":
         echo(json_encode(isSetTmpAccount()));
         break;
-    default:
-//        var_dump(json_encode($customService->getSecretCodeForRegistration()));
-//        $response = array(
-//            "verifyCode" => false,
-//            "code" => $customService->getSecretCodeForRegistration()
-//        );
-//        var_dump(json_encode($response));
-//        var_dump(json_encode($customService->login("kikosokol@gmail.com","123456789")));
-//        $userAccount = $customService->login("kikosokol@gmail.com","123456789");
-//        var_dump(json_encode($service->getUserByAccountId($userAccount->id)));
-//        $json = file_get_contents('php://input');
-//        $loginData = json_decode($json);
-//        var_dump(json_encode($loginData));
-//        $_SESSION['accountId'] = 10;
-//        var_dump(verifyCustomLogin($customService,$service,"319548"));
-//        $_SESSION['accountId'] = 10;
-//        var_dump(getStats($service));
-//        var_dump($repository->getCoutnCustomAccount());
-
-
-
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 function getResponseRegistration($verifyCode, $successRegistration, $error)
 {

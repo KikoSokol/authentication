@@ -24,11 +24,10 @@ if(isset($_GET['code'])){
     $client->setAccessToken($token);
     $_SESSION['upload_token'] = $token;
 
-    // redirect back to the example
+
     header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
 }
 
-// set the access token as part of the client
 if (!empty($_SESSION['upload_token'])) {
     $client->setAccessToken($_SESSION['upload_token']);
     if ($client->isAccessTokenExpired()) {
@@ -55,7 +54,6 @@ if ($client->getAccessToken()) {
 } else {
     $authUrl = $client->createAuthUrl();
     echo json_encode($authUrl);
-//    $output = '<a href="'.filter_var($authUrl, FILTER_SANITIZE_URL).'"><button>google</button></a>';
 }
 
 

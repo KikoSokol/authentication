@@ -84,3 +84,21 @@ function toLoginPage()
 {
     window.location.replace("../index.html");
 }
+
+function logout()
+{
+    const url = "../api.php?operation=logout";
+    const request = new Request(url, {
+        method:'POST'
+    });
+
+    fetch(request)
+        .then(request => request.json())
+        .then(data =>
+        {
+            if(data)
+                window.location.replace("../index.html");
+            else
+                window.alert("Nepodarilo sa vas odhlasiť");
+        });
+}
