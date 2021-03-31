@@ -128,3 +128,8 @@ function showQRCodeImage(url,secretId)
     document.getElementById("qrcode").src = url;
     document.getElementById("secretId").value = secretId;
 }
+
+function toLoginPage()
+{
+    window.location.href = "../index.html";
+}

@@ -93,3 +93,8 @@ function fillCountLoginTable(data)
     table.append(tr);
 
 }
+
+function showHome()
+{
+    window.location.href = "../html/home.html";
+}

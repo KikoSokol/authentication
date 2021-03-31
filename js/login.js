@@ -185,3 +185,9 @@ function toHomePage()
     window.location.replace("html/home.html");
 }
 
+
+function createAccount()
+{
+    // window.location.replace();
+    window.location.href = "html/formular.html";
+}

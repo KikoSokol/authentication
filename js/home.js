@@ -46,3 +46,8 @@ function logout()
                 window.alert("Nepodarilo sa vas odhlasiť");
         });
 }
+
+function showStats()
+{
+    window.location.href = "../html/stats.html";
+}
